@@ -8,12 +8,8 @@ inputs:
     description: Output file for converted issues
     required: true
   transformation:
-    description: Type of transformation to apply
+    description: Type of transformation to apply (one of gtest-to-generic-execution, mutation-test-to-generic-issue)
     required: true
-    type: choice
-    options:
-      - gtest-to-generic-execution
-      - mutation-report-to-generic-issue
 
 runs:
   using: composite
