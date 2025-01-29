@@ -25,7 +25,7 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - uses: oxsecurity/megalinter/flavor/documentation@839e6d63c0423eb74ce2578225f8b8b4bed63ede # v8.4.1
+      - uses: oxsecurity/megalinter/flavors/documentation@839e6d63c0423eb74ce2578225f8b8b4bed63ede # v8.4.1
         env:
           APPLY_FIXES: all
           VALIDATE_ALL_CODEBASE: true
