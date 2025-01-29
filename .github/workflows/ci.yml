@@ -31,6 +31,7 @@ jobs:
           input: ${{ github.workspace }}/testresults/*.xml
           output: gtest-generic-execution.xml
           transformation: gtest-to-generic-execution
+      - run: diff -s gtest-generic-execution.xml test/gtest-to-generic-execution/expected-gtest-generic-execution.xml
       - uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
         with:
           name: gtest-generic-execution
