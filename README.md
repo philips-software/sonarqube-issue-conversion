@@ -10,7 +10,7 @@ sonarqube-issue-conversion is a GitHub Action that can convert the output of sev
 
 The currently supported conversions are:
 
-- [gtest-to-generic-execution](): converts [GoogleTest](https://github.com/google/googletest) output to [Generic Execution](https://docs.sonarsource.com/sonarqube-server/latest/analyzing-source-code/test-coverage/generic-test-data/#generic-test-execution)
+- [gtest-to-generic-execution](#gtest-to-generic-execution): converts [GoogleTest](https://github.com/google/googletest) output to [Generic Execution](https://docs.sonarsource.com/sonarqube-server/latest/analyzing-source-code/test-coverage/generic-test-data/#generic-test-execution)
 
 ## State
 
