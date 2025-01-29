@@ -15,5 +15,6 @@ CPMAddPackage(
 include(CTest)
 include(GoogleTest)
 
-add_executable(test test.cpp)
-target_link_libraries(test PRIVATE gmock_main)
+add_executable(CalculatorTest CalculatorTest.cpp)
+target_link_libraries(CalculatorTest PRIVATE gmock_main)
+add_test(NAME CalculatorTest COMMAND CalculatorTest)
