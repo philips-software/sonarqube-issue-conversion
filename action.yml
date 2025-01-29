@@ -1,42 +1,40 @@
-name: 'SonarQube Issue Conversion'
-description: 'Transform tool output into generic SonarQube format(s)'
+name: SonarQube Issue Conversion
+description: Transform tool output into generic SonarQube format(s)
 inputs:
   input:
-    description: 'Single or multiple tool output files to convert'
+    description: Single or multiple tool output files to convert
     required: true
   output:
-    description: 'Output file for converted issues'
+    description: Output file for converted issues
     required: true
   transformation:
-    description: 'Type of transformation to apply'
+    description: Type of transformation to apply (one of gtest-to-generic-execution, mutation-test-to-generic-issue)
     required: true
-    type: string
-    options:
-      - 'gtest-to-generic-execution'
-      - 'mutation-report-to-generic-issue'
+
 runs:
-  using: 'composite'
+  using: composite
   steps:
     - uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
       with:
         python-version: '3.x'
 
-    - run: |
+    - shell: bash
+      run: |
         python -m pip install --upgrade pip
         pip install lxml
 
-    - run: |
+    - shell: bash
+      run: |
         echo 'Using transformation: ${{ inputs.transformation }} to convert ${{ inputs.input }} to ${{ inputs.output }}'
 
         case ${{ inputs.transformation }} in
           'gtest-to-generic-execution')
             { echo '<testExecutions version="1">'; xsltproc converters/gtest-to-generic-execution.xslt ${{ inputs.input }}; echo '</testExecutions>'; } | tee ${{ inputs.output }} > /dev/null
-            xsltproc -o ${{ inputs.output-directory }}/$(basename $file) gtest-to-generic-execution.xslt $file
             ;;
           'mutation-test-to-generic-issue')
             ;;
           *)
-            echo "Unknown transformation type: ${{ inputs.transformation }}"
+            echo 'Unknown transformation type: ${{ inputs.transformation }}'
             exit 1
             ;;
         esac
