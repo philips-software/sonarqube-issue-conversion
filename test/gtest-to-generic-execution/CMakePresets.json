@@ -18,10 +18,17 @@
     {
       "name": "default",
       "configurePreset": "default",
-      "buildPreset": "build"
+      "configuration": "Debug",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": true
+      }
     }
   ],
-  "workflows": [
+  "workflowPresets": [
     {
       "name": "configure-build-test",
       "steps": [
