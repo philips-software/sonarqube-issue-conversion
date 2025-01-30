@@ -29,7 +29,7 @@ runs:
 
         case ${{ inputs.transformation }} in
           'gtest-to-generic-execution')
-            { echo '<testExecutions version="1">'; xsltproc ${GITHUB_ACTION_PATH}/converters/gtest-to-generic-execution.xslt ${{ inputs.input }}; echo '</testExecutions>'; } | tee ${{ inputs.output }} > /dev/null
+            xsltproc ${GITHUB_ACTION_PATH}/converters/gtest-to-generic-execution.xslt ${{ inputs.input }} > ${{ inputs.output }}
             ;;
           'mutation-test-to-generic-issue')
             ;;
