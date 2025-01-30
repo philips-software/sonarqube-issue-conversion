@@ -6,6 +6,7 @@
     <xsl:key name="testcases-by-file" match="*/testsuite/testcase" use="@file" />
 
     <xsl:template match="/">
+        <testExecutions version="1">
             <xsl:for-each select="*/testsuite/testcase[count(. | key('testcases-by-file', @file)[1]) = 1]">
                 <xsl:variable name="current-grouping-key" select="@file"/>
                 <xsl:variable name="current-group" select="key('testcases-by-file', $current-grouping-key)"/>
@@ -20,5 +21,6 @@
                     </xsl:for-each>
                 </file>
             </xsl:for-each>
+        </testExecutions>
     </xsl:template>
 </xsl:stylesheet>
