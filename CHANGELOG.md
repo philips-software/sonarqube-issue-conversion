@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/philips-software/sonarqube-issue-conversion/compare/v1.0.0...v1.0.1) (2025-01-30)
+
+
+### Bug Fixes
+
+* Use ${GITHUB_ACTION_PATH} when referencing external files ([#7](https://github.com/philips-software/sonarqube-issue-conversion/issues/7)) ([e9ecfaf](https://github.com/philips-software/sonarqube-issue-conversion/commit/e9ecfaf76683d16544ae6e255c67c9746ee072ae))
+
 ## [1.0.0](https://github.com/philips-software/sonarqube-issue-conversion/compare/v0.0.1...v1.0.0) (2025-01-30)
 
 
