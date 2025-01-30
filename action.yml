@@ -14,6 +14,7 @@ inputs:
 runs:
   using: composite
   steps:
+    - uses: dcarbone/install-jq-action@e397bd87438d72198f81efd21f876461183d383a # v3.0.1
     - uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
       with:
         python-version: '3.12'
@@ -32,6 +33,9 @@ runs:
             { echo '<testExecutions version="1">'; xsltproc ${GITHUB_ACTION_PATH}/converters/gtest-to-generic-execution.xslt ${{ inputs.input }}; echo '</testExecutions>'; } | tee ${{ inputs.output }} > /dev/null
             ;;
           'mutation-test-to-generic-issue')
+            MERGED_MUTATION_FILE=$(mktemp)
+            jq -s 'reduce .[] as $item ({}; . * $item)' ${{ inputs.input }} > ${MERGED_MUTATION_FILE}
+            jq --arg workspace "${GITHUB_WORKSPACE}" -f ${GITHUB_ACTION_PATH}/converters/mutation-elements-to-generic-issue.jq ${MERGED_MUTATION_FILE} > ${{ inputs.output }}
             ;;
           *)
             echo 'Unknown transformation type: ${{ inputs.transformation }}'
