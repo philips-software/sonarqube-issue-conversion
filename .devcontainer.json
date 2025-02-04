@@ -1,0 +1,10 @@
+{
+  "image": "ghcr.io/philips-software/amp-devcontainer-cpp:v5.6.0",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "cmake.ignoreCMakeListsMissing": true
+      }
+    }
+  }
+}
