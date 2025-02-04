@@ -1,8 +1,6 @@
 {
   "include-component-in-tag": false,
-  "plugins": [
-    "sentence-case"
-  ],
+  "plugins": ["sentence-case"],
   "packages": {
     ".": {
       "release-type": "simple",
