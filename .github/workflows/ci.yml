@@ -33,6 +33,7 @@ jobs:
           transformation: gtest-to-generic-execution
       - run: diff -s gtest-generic-execution.xml test/gtest-to-generic-execution/expected-gtest-generic-execution.xml
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
         with:
           name: gtest-generic-execution
           path: gtest-generic-execution.xml
@@ -62,6 +63,7 @@ jobs:
       - shell: bash
         run: diff -s gtest-generic-execution.xml test/gtest-to-generic-execution/expected-gtest-generic-execution-${{ runner.os }}.xml
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
         with:
           name: gtest-generic-execution-${{ matrix.runner }}
           path: gtest-generic-execution.xml
