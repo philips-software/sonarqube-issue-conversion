@@ -44,9 +44,9 @@ runs:
         switch ('${{ inputs.transformation }}') {
           'gtest-to-generic-execution' {
             python -m pip install lxml
-            echo '<testExecutions version="1">' > ${{ inputs.output }}
-            python $env:GITHUB_ACTION_PATH/converters/xsltproc $env:GITHUB_ACTION_PATH/converters/gtest-to-generic-execution.xslt (Get-ChildItem ${{ inputs.input }}).FullName >> ${{ inputs.output }}
-            echo '</testExecutions>' >> ${{ inputs.output }}
+            echo '<testExecutions version="1">' | Out-File -Encoding utf8 -FilePath ${{ inputs.output }}
+            python $env:GITHUB_ACTION_PATH/converters/xsltproc $env:GITHUB_ACTION_PATH/converters/gtest-to-generic-execution.xslt (Get-ChildItem ${{ inputs.input }}).FullName | Out-File -Encoding utf8 -FilePath ${{ inputs.output }} -Append
+            echo '</testExecutions>' | Out-File -Encoding utf8 -FilePath ${{ inputs.output }} -Append
           }
           'mutation-test-to-generic-issue' {
             # Add Windows-specific logic here
