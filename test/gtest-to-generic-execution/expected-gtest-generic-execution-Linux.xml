@@ -1,5 +1,5 @@
 <testExecutions version="1">
-<file path="/Users/runner/work/sonarqube-issue-conversion/sonarqube-issue-conversion/test/gtest-to-generic-execution/CalculatorTest.cpp">
+<file path="/home/runner/work/sonarqube-issue-conversion/sonarqube-issue-conversion/test/gtest-to-generic-execution/CalculatorTest.cpp">
   <testCase name="should_add_two_numbers" duration="0"/>
 </file>
 </testExecutions>
