@@ -55,7 +55,7 @@ runs:
         switch ('${{ inputs.transformation }}') {
           'gtest-to-generic-execution' {
             echo '<testExecutions version="1">' | Out-File -FilePath ${{ inputs.output }} -Append
-            python ${GITHUB_ACTION_PATH}/converters/xsltproc ${GITHUB_ACTION_PATH}/converters/gtest-to-generic-execution.xslt ${{ inputs.input }} | Out-File -FilePath ${{ inputs.output }} -Append
+            python $env:GITHUB_ACTION_PATH/converters/xsltproc $env:GITHUB_ACTION_PATH/converters/gtest-to-generic-execution.xslt ${{ inputs.input }} | Out-File -FilePath ${{ inputs.output }} -Append
             echo '</testExecutions>' | Out-File -FilePath ${{ inputs.output }} -Append
           }
           'mutation-test-to-generic-issue' {
