@@ -24,12 +24,6 @@ runs:
         python -m pip install --upgrade pip==24.3.1
         pip install lxml
 
-    - if: runner.os == 'Windows'
-      shell: powershell
-      run: |
-        python -m pip install --upgrade pip==24.3.1
-        pip install lxml
-
     - if: runner.os != 'Windows'
       shell: bash
       run: |
@@ -37,7 +31,7 @@ runs:
 
         case ${{ inputs.transformation }} in
           'gtest-to-generic-execution')
-            { echo '<testExecutions version="1">'; xsltproc ${GITHUB_ACTION_PATH}/converters/gtest-to-generic-execution.xslt ${{ inputs.input }}; echo '</testExecutions>'; } | tee ${{ inputs.output }} > /dev/null
+            { echo '<testExecutions version="1">'; python ${GITHUB_ACTION_PATH}/converters/xsltproc ${GITHUB_ACTION_PATH}/converters/gtest-to-generic-execution.xslt ${{ inputs.input }}; echo '</testExecutions>'; } | tee ${{ inputs.output }} > /dev/null
             ;;
           'mutation-test-to-generic-issue')
             ;;
@@ -50,12 +44,18 @@ runs:
     - if: runner.os == 'Windows'
       shell: powershell
       run: |
+        python -m pip install --upgrade pip==24.3.1
+        pip install lxml
+
+    - if: runner.os == 'Windows'
+      shell: powershell
+      run: |
         echo "Using transformation: ${{ inputs.transformation }} to convert ${{ inputs.input }} to ${{ inputs.output }}"
 
         switch (${{ inputs.transformation }}) {
           'gtest-to-generic-execution' {
             echo '<testExecutions version="1">' | Out-File -FilePath ${{ inputs.output }} -Append
-            xsltproc ${GITHUB_ACTION_PATH}/converters/gtest-to-generic-execution.xslt ${{ inputs.input }} | Out-File -FilePath ${{ inputs.output }} -Append
+            python ${GITHUB_ACTION_PATH}/converters/xsltproc ${GITHUB_ACTION_PATH}/converters/gtest-to-generic-execution.xslt ${{ inputs.input }} | Out-File -FilePath ${{ inputs.output }} -Append
             echo '</testExecutions>' | Out-File -FilePath ${{ inputs.output }} -Append
           }
           'mutation-test-to-generic-issue' {
