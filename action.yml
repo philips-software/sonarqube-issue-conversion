@@ -21,12 +21,14 @@ runs:
     - if: runner.os != 'Windows'
       shell: bash
       run: |
+        set -Eeufo pipefail
+
         echo 'Using transformation: ${{ inputs.transformation }} to convert ${{ inputs.input }} to ${{ inputs.output }}'
 
         case ${{ inputs.transformation }} in
           'gtest-to-generic-execution')
             python -m pip install lxml
-            { echo '<testExecutions version="1">'; python ${GITHUB_ACTION_PATH}/converters/xsltproc ${GITHUB_ACTION_PATH}/converters/gtest-to-generic-execution.xslt ${{ inputs.input }}; echo '</testExecutions>'; } | tee ${{ inputs.output }} > /dev/null
+            { echo '<testExecutions version="1">'; python ${GITHUB_ACTION_PATH}/converters/xsltproc.py ${GITHUB_ACTION_PATH}/converters/gtest-to-generic-execution.xslt ${{ inputs.input }}; echo '</testExecutions>'; } | tee ${{ inputs.output }} > /dev/null
             ;;
           'mutation-test-to-generic-issue')
             ;;
@@ -45,7 +47,7 @@ runs:
           'gtest-to-generic-execution' {
             python -m pip install lxml
             echo '<testExecutions version="1">' | Out-File -Encoding ascii -FilePath ${{ inputs.output }}
-            python $env:GITHUB_ACTION_PATH/converters/xsltproc $env:GITHUB_ACTION_PATH/converters/gtest-to-generic-execution.xslt (Get-ChildItem ${{ inputs.input }}).FullName | Out-File -Encoding ascii -FilePath ${{ inputs.output }} -Append
+            python $env:GITHUB_ACTION_PATH/converters/xsltproc.py $env:GITHUB_ACTION_PATH/converters/gtest-to-generic-execution.xslt ${{ inputs.input }} | Out-File -Encoding ascii -FilePath ${{ inputs.output }} -Append
             echo '</testExecutions>' | Out-File -Encoding ascii -FilePath ${{ inputs.output }} -Append
           }
           'mutation-test-to-generic-issue' {
