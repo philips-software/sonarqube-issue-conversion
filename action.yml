@@ -27,13 +27,12 @@ runs:
       run: |
         set -Eeufo pipefail
 
-        sanitized_input=$(echo ${INPUT} | tr '\n' ' ')
-        echo "Using transformation: ${TRANSFORMATION} to convert ${sanitized_input} to ${OUTPUT}"
+        echo "Using transformation: ${TRANSFORMATION} to convert ${INPUT} to ${OUTPUT}"
 
         case ${TRANSFORMATION} in
           'gtest-to-generic-execution')
             python -m pip install lxml
-            { echo '<testExecutions version="1">'; python ${GITHUB_ACTION_PATH}/converters/xsltproc.py ${GITHUB_ACTION_PATH}/converters/gtest-to-generic-execution.xslt ${sanitized_input}; echo '</testExecutions>'; } | tee ${OUTPUT} > /dev/null
+            { echo '<testExecutions version="1">'; python ${GITHUB_ACTION_PATH}/converters/xsltproc.py ${GITHUB_ACTION_PATH}/converters/gtest-to-generic-execution.xslt ${INPUT}; echo '</testExecutions>'; } | tee ${OUTPUT} > /dev/null
             ;;
           'mutation-test-to-generic-issue')
             ;;
