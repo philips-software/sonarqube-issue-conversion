@@ -32,10 +32,11 @@ def gtest_to_generic_execution(resolved_inputs, output):
     test_executions.set("version", "1")
 
     transformer = etree.XSLT(open_etree(Path(os.getenv("GITHUB_ACTION_PATH")) / "converters" / "gtest-to-generic-execution.xslt"))
+    parser = etree.XMLParser(remove_blank_text=True)
 
     for path in resolved_inputs:
         transformed_tree = str(transformer(open_etree(path)))
-        for execution in etree.fromstring(f"<root>{transformed_tree}</root>"):
+        for execution in etree.fromstring(f"<root>{transformed_tree}</root>", parser):
             test_executions.append(execution)
 
     document = etree.ElementTree(test_executions)
