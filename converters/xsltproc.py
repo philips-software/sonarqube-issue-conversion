@@ -24,7 +24,7 @@ if __name__ == "__main__":
     resolved_paths = []
 
     for xml_path in args.xml_paths:
-        p = Path(xml_path)
+        p = Path(xml_path.strip())
 
         if p.is_file():
             resolved_paths.append(p)
