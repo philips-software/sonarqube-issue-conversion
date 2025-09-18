@@ -36,4 +36,4 @@ runs:
         TRANSFORMATION: ${{ inputs.transformation }}
       run: |
         python -m pip install -r $GITHUB_ACTION_PATH/requirements.txt
-        python $env:GITHUB_ACTION_PATH/issue-converter.py
+        python $GITHUB_ACTION_PATH/issue-converter.py
