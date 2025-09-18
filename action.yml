@@ -28,7 +28,7 @@ runs:
         set -Eeufo pipefail
 
         sanitized_input=$(echo ${INPUT} | tr '\n' ' ')
-        echo 'Using transformation: ${TRANSFORMATION} to convert ${sanitized_input} to ${OUTPUT}'
+        echo "Using transformation: ${TRANSFORMATION} to convert ${sanitized_input} to ${OUTPUT}"
 
         case ${TRANSFORMATION} in
           'gtest-to-generic-execution')
@@ -53,7 +53,7 @@ runs:
         $sanitized_input = $env:INPUT.Replace("`r`n", " ").Replace("`n", " ")
         echo "Using transformation: $env:TRANSFORMATION to convert $sanitized_input to $env:OUTPUT"
 
-        switch ('$env:TRANSFORMATION') {
+        switch ($env:TRANSFORMATION) {
           'gtest-to-generic-execution' {
             python -m pip install lxml
             echo '<testExecutions version="1">' | Out-File -Encoding ascii -FilePath ${{ inputs.output }}
