@@ -18,53 +18,20 @@ runs:
       with:
         python-version: "3.13"
 
-    - if: runner.os != 'Windows'
-      shell: bash
-      env:
-        INPUT: ${{ inputs.input }}
-        OUTPUT: ${{ inputs.output }}
-        TRANSFORMATION: ${{ inputs.transformation }}
-      run: |
-        set -Eeufo pipefail
-
-        sanitized_input=$(echo ${INPUT} | tr '\n' ' ')
-        echo "Using transformation: ${TRANSFORMATION} to convert ${sanitized_input} to ${OUTPUT}"
-
-        case ${TRANSFORMATION} in
-          'gtest-to-generic-execution')
-            python -m pip install lxml
-            { echo '<testExecutions version="1">'; python ${GITHUB_ACTION_PATH}/converters/xsltproc.py ${GITHUB_ACTION_PATH}/converters/gtest-to-generic-execution.xslt ${sanitized_input}; echo '</testExecutions>'; } | tee ${OUTPUT} > /dev/null
-            ;;
-          'mutation-test-to-generic-issue')
-            ;;
-          *)
-            echo 'Unknown transformation type: ${TRANSFORMATION}'
-            exit 1
-            ;;
-        esac
-
     - if: runner.os == 'Windows'
-      shell: powershell
       env:
         INPUT: ${{ inputs.input }}
         OUTPUT: ${{ inputs.output }}
         TRANSFORMATION: ${{ inputs.transformation }}
       run: |
-        $sanitized_input = $env:INPUT.Replace("`r`n", " ").Replace("`n", " ")
-        echo "Using transformation: $env:TRANSFORMATION to convert $sanitized_input to $env:OUTPUT"
+        python -m pip install -r $env:GITHUB_ACTION_PATH/requirements.txt
+        python $env:GITHUB_ACTION_PATH/issue-converter.py
 
-        switch ($env:TRANSFORMATION) {
-          'gtest-to-generic-execution' {
-            python -m pip install lxml
-            echo '<testExecutions version="1">' | Out-File -Encoding ascii -FilePath $env:OUTPUT
-            python $env:GITHUB_ACTION_PATH/converters/xsltproc.py $env:GITHUB_ACTION_PATH/converters/gtest-to-generic-execution.xslt $sanitized_input | Out-File -Encoding ascii -FilePath $env:OUTPUT -Append
-            echo '</testExecutions>' | Out-File -Encoding ascii -FilePath $env:OUTPUT -Append
-          }
-          'mutation-test-to-generic-issue' {
-            # Add Windows-specific logic here
-          }
-          default {
-            echo "Unknown transformation type: $env:TRANSFORMATION"
-            exit 1
-          }
-        }
+    - if: runner.os != 'Windows'
+      env:
+        INPUT: ${{ inputs.input }}
+        OUTPUT: ${{ inputs.output }}
+        TRANSFORMATION: ${{ inputs.transformation }}
+      run: |
+        python -m pip install -r $GITHUB_ACTION_PATH/requirements.txt
+        python $env:GITHUB_ACTION_PATH/issue-converter.py
