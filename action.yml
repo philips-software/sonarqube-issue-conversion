@@ -56,7 +56,7 @@ runs:
         switch ($env:TRANSFORMATION) {
           'gtest-to-generic-execution' {
             python -m pip install lxml
-            echo '<testExecutions version="1">' | Out-File -Encoding ascii -FilePath ${{ inputs.output }}
+            echo '<testExecutions version="1">' | Out-File -Encoding ascii -FilePath $env:OUTPUT
             python $env:GITHUB_ACTION_PATH/converters/xsltproc.py $env:GITHUB_ACTION_PATH/converters/gtest-to-generic-execution.xslt $sanitized_input | Out-File -Encoding ascii -FilePath $env:OUTPUT -Append
             echo '</testExecutions>' | Out-File -Encoding ascii -FilePath $env:OUTPUT -Append
           }
