@@ -19,6 +19,7 @@ runs:
         python-version: "3.13"
 
     - if: runner.os == 'Windows'
+      shell: powershell
       env:
         INPUT: ${{ inputs.input }}
         OUTPUT: ${{ inputs.output }}
@@ -28,6 +29,7 @@ runs:
         python $env:GITHUB_ACTION_PATH/issue-converter.py
 
     - if: runner.os != 'Windows'
+      shell: bash
       env:
         INPUT: ${{ inputs.input }}
         OUTPUT: ${{ inputs.output }}
