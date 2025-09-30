@@ -18,43 +18,22 @@ runs:
       with:
         python-version: "3.13"
 
-    - if: runner.os != 'Windows'
-      shell: bash
-      run: |
-        set -Eeufo pipefail
-
-        echo 'Using transformation: ${{ inputs.transformation }} to convert ${{ inputs.input }} to ${{ inputs.output }}'
-
-        case ${{ inputs.transformation }} in
-          'gtest-to-generic-execution')
-            python -m pip install lxml
-            { echo '<testExecutions version="1">'; python ${GITHUB_ACTION_PATH}/converters/xsltproc.py ${GITHUB_ACTION_PATH}/converters/gtest-to-generic-execution.xslt ${{ inputs.input }}; echo '</testExecutions>'; } | tee ${{ inputs.output }} > /dev/null
-            ;;
-          'mutation-test-to-generic-issue')
-            ;;
-          *)
-            echo 'Unknown transformation type: ${{ inputs.transformation }}'
-            exit 1
-            ;;
-        esac
-
     - if: runner.os == 'Windows'
       shell: powershell
+      env:
+        INPUT: ${{ inputs.input }}
+        OUTPUT: ${{ inputs.output }}
+        TRANSFORMATION: ${{ inputs.transformation }}
       run: |
-        echo "Using transformation: ${{ inputs.transformation }} to convert ${{ inputs.input }} to ${{ inputs.output }}"
+        python -m pip install -r $env:GITHUB_ACTION_PATH/requirements.txt
+        python $env:GITHUB_ACTION_PATH/issue-converter.py
 
-        switch ('${{ inputs.transformation }}') {
-          'gtest-to-generic-execution' {
-            python -m pip install lxml
-            echo '<testExecutions version="1">' | Out-File -Encoding ascii -FilePath ${{ inputs.output }}
-            python $env:GITHUB_ACTION_PATH/converters/xsltproc.py $env:GITHUB_ACTION_PATH/converters/gtest-to-generic-execution.xslt ${{ inputs.input }} | Out-File -Encoding ascii -FilePath ${{ inputs.output }} -Append
-            echo '</testExecutions>' | Out-File -Encoding ascii -FilePath ${{ inputs.output }} -Append
-          }
-          'mutation-test-to-generic-issue' {
-            # Add Windows-specific logic here
-          }
-          default {
-            echo "Unknown transformation type: ${{ inputs.transformation }}"
-            exit 1
-          }
-        }
+    - if: runner.os != 'Windows'
+      shell: bash
+      env:
+        INPUT: ${{ inputs.input }}
+        OUTPUT: ${{ inputs.output }}
+        TRANSFORMATION: ${{ inputs.transformation }}
+      run: |
+        python -m pip install -r $GITHUB_ACTION_PATH/requirements.txt
+        python $GITHUB_ACTION_PATH/issue-converter.py

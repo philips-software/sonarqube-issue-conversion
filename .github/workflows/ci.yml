@@ -22,13 +22,13 @@ jobs:
           persist-credentials: false
       - uses: lukka/run-cmake@af1be47fd7c933593f687731bc6fdbee024d3ff4 # v10.8
         with:
-          cmakeListsTxtPath: ${{ github.workspace }}/test/gtest-to-generic-execution/CMakeLists.txt
-          workflowPreset: "configure-build-test"
+          cmakeListsTxtPath: test/gtest-to-generic-execution/CMakeLists.txt
+          workflowPreset: configure-build-test
         env:
-          GTEST_OUTPUT: "xml:${{ github.workspace }}/testresults/"
+          GTEST_OUTPUT: "xml:/tmp/testresults/"
       - uses: ./
         with:
-          input: ${{ github.workspace }}/testresults/*.xml
+          input: /tmp/testresults/*.xml
           output: gtest-generic-execution.xml
           transformation: gtest-to-generic-execution
       - run: diff -s gtest-generic-execution.xml test/gtest-to-generic-execution/expected-gtest-generic-execution-container.xml
@@ -52,7 +52,7 @@ jobs:
       - uses: lukka/run-cmake@af1be47fd7c933593f687731bc6fdbee024d3ff4 # v10.8
         with:
           cmakeListsTxtPath: ${{ github.workspace }}/test/gtest-to-generic-execution/CMakeLists.txt
-          workflowPreset: "configure-build-test"
+          workflowPreset: configure-build-test
         env:
           GTEST_OUTPUT: "xml:${{ github.workspace }}/testresults/"
       - uses: ./
@@ -61,7 +61,7 @@ jobs:
           output: gtest-generic-execution.xml
           transformation: gtest-to-generic-execution
       - shell: bash
-        run: diff -s gtest-generic-execution.xml test/gtest-to-generic-execution/expected-gtest-generic-execution-${{ runner.os }}.xml
+        run: diff --strip-trailing-cr -s gtest-generic-execution.xml test/gtest-to-generic-execution/expected-gtest-generic-execution-${{ runner.os }}.xml
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: always()
         with:
