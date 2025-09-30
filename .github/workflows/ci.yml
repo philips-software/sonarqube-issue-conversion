@@ -23,9 +23,9 @@ jobs:
       - uses: lukka/run-cmake@af1be47fd7c933593f687731bc6fdbee024d3ff4 # v10.8
         with:
           cmakeListsTxtPath: test/gtest-to-generic-execution/CMakeLists.txt
-          workflowPreset: "configure-build-test"
+          workflowPreset: configure-build-test
         env:
-          GTEST_OUTPUT: "xml:testresults/"
+          GTEST_OUTPUT: "xml:${PWD}/testresults/"
       - uses: ./
         with:
           input: testresults/*.xml
@@ -52,7 +52,7 @@ jobs:
       - uses: lukka/run-cmake@af1be47fd7c933593f687731bc6fdbee024d3ff4 # v10.8
         with:
           cmakeListsTxtPath: ${{ github.workspace }}/test/gtest-to-generic-execution/CMakeLists.txt
-          workflowPreset: "configure-build-test"
+          workflowPreset: configure-build-test
         env:
           GTEST_OUTPUT: "xml:${{ github.workspace }}/testresults/"
       - uses: ./
