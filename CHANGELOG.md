@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/philips-software/sonarqube-issue-conversion/compare/v1.1.0...v1.2.0) (2025-09-30)
+
+
+### Features
+
+* Re-implement logic in Python ([#53](https://github.com/philips-software/sonarqube-issue-conversion/issues/53)) ([ad5eb04](https://github.com/philips-software/sonarqube-issue-conversion/commit/ad5eb04911986cb9c1463ef72748e144ec24ae31))
+
 ## [1.1.0](https://github.com/philips-software/sonarqube-issue-conversion/compare/v1.0.1...v1.1.0) (2025-06-17)
 
 
