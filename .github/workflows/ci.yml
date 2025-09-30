@@ -25,10 +25,10 @@ jobs:
           cmakeListsTxtPath: test/gtest-to-generic-execution/CMakeLists.txt
           workflowPreset: configure-build-test
         env:
-          GTEST_OUTPUT: "xml:${PWD}/testresults/"
+          GTEST_OUTPUT: "xml:/tmp/testresults/"
       - uses: ./
         with:
-          input: testresults/*.xml
+          input: /tmp/testresults/*.xml
           output: gtest-generic-execution.xml
           transformation: gtest-to-generic-execution
       - run: diff -s gtest-generic-execution.xml test/gtest-to-generic-execution/expected-gtest-generic-execution-container.xml
