@@ -28,7 +28,7 @@ jobs:
           GTEST_OUTPUT: "xml:${{ github.workspace }}/testresults/"
       - uses: ./
         with:
-          input: ${{ env.GITHUB_WORKSPACE }}/testresults/*.xml
+          input: ${{ github.workspace }}/testresults/*.xml
           output: gtest-generic-execution.xml
           transformation: gtest-to-generic-execution
       - run: diff -s gtest-generic-execution.xml test/gtest-to-generic-execution/expected-gtest-generic-execution-container.xml
