@@ -32,7 +32,7 @@ jobs:
           output: gtest-generic-execution.xml
           transformation: gtest-to-generic-execution
       - run: diff -s gtest-generic-execution.xml test/gtest-to-generic-execution/expected-gtest-generic-execution-container.xml
-      - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         if: always()
         with:
           name: gtest-generic-execution-container
@@ -62,7 +62,7 @@ jobs:
           transformation: gtest-to-generic-execution
       - shell: bash
         run: diff --strip-trailing-cr -s gtest-generic-execution.xml test/gtest-to-generic-execution/expected-gtest-generic-execution-${{ runner.os }}.xml
-      - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         if: always()
         with:
           name: gtest-generic-execution-${{ runner.os }}
