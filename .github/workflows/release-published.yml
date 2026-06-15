@@ -15,6 +15,6 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: rdlf0/comment-released-prs-action@a81897eaea04a5faa8779d28607826ddb033321a # v3.1.0
+      - uses: rdlf0/comment-released-prs-action@249f57bed533baa7f883fe9d9a834424f153c3cb # v3.2.0
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
