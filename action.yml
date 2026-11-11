@@ -10,7 +10,6 @@ inputs:
   transformation:
     description: Type of transformation to apply (one of gtest-to-generic-execution, mutation-test-to-generic-issue)
     required: true
-
 runs:
   using: composite
   steps:

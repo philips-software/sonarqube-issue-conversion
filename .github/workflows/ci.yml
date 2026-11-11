@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   test-gtest-to-generic-execution-container:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     container: ghcr.io/philips-software/amp-devcontainer-cpp:v6.3.0@sha256:30de1e63a8f3da17e3e19a0e790d524f6a26935e7c9a2f70605699759bf3e493
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
