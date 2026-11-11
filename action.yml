@@ -10,11 +10,16 @@ inputs:
   transformation:
     description: Type of transformation to apply (one of gtest-to-generic-execution, mutation-test-to-generic-issue)
     required: true
+  use-system-python:
+    description: Use the Python interpreter provided by the runner environment
+    required: false
+    default: "false"
 
 runs:
   using: composite
   steps:
-    - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+    - if: inputs.use-system-python != 'true'
+      uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
       with:
         python-version: "3.13"
 
